@@ -1,63 +1,77 @@
-# AutoDL 使用说明
+# 镜像构建
 
-本文档说明如何在 AutoDL 中使用 FLX Remote Runtime 镜像。
+## 基本环境
 
-## 创建实例
+- 框架：PyTorch 2.1.2
+- Python：3.10
+- CUDA：11.8
+- 推荐 GPU：NVIDIA CUDA GPU，显存 8GB 及以上
+- 推荐内存：16GB 及以上
 
-1. 打开 AutoDL 控制台。
-2. 选择该社区镜像。
-3. 选择支持 CUDA 的 GPU 实例。
-4. 创建并启动实例。
+## 构建过程
 
-建议配置：
+该镜像已预置远程 GPU 多媒体运行环境，创建 AutoDL 实例后即可使用。
 
-- NVIDIA CUDA GPU
-- 显存 8GB 及以上
-- 内存 16GB 及以上
+无需手动执行代码 Clone 或依赖安装。
 
-如果需要处理较长任务，建议选择更高显存的 GPU。
+适用场景：
 
-## SSH 连接方式
+- 语音合成
+- 视频同步处理
+- 需要远程 GPU 参与的多媒体生成流程
 
-AutoDL 实例启动后：
+## 环境验证
 
-1. 复制 AutoDL 页面中的 SSH 登录指令。
-2. 复制 AutoDL 页面中的 SSH 密码。
-3. 打开需要连接该运行环境的本地程序。
-4. 打开模型运行方式设置。
-5. 开启远程服务器模式。
-6. 填入 SSH 登录指令和密码。
-7. 保存远程 SSH 配置。
-8. 点击“测试连接”。
+进入实例后，可使用以下命令查看 GPU 状态：
 
-本地程序会自动管理 SSH 连接、端口转发和远程运行环境启动。
-
-## 运行态文件
-
-远程临时任务文件位于：
-
-```text
-/root/flowlogic-remote-model/workspace/
+```bash
+nvidia-smi
 ```
 
-这些文件不是镜像运行环境的必要组成部分。如需重置运行状态，可以清理该目录下的临时输入、输出和日志。
+查看运行目录：
 
-## 常见问题
+```bash
+ls /root/flowlogic-remote-model
+```
 
-### 连接失败
+## 使用方法
 
-请检查：
+1. 在 AutoDL 中使用该镜像创建实例。
+2. 保持实例处于运行状态。
+3. 在 AutoDL 实例页面复制 SSH 登录指令和密码。
+4. 在需要连接该运行环境的本地程序中填写 SSH 信息。
+5. 点击测试连接，确认远程运行环境可用。
+6. 按照本地程序流程执行任务。
 
-- AutoDL 实例是否正在运行。
-- SSH 登录指令中的主机和端口是否正确。
-- SSH 密码是否正确。
-- 本地网络是否可以连接 AutoDL SSH 服务。
+SSH 登录指令格式示例：
 
-### 任务失败
+```bash
+ssh -p 12345 root@connect.example.seetacloud.com
+```
 
-请检查：
+## 运行目录
 
-- AutoDL 实例显存是否足够。
-- 远程运行目录是否存在。
-- 本地程序是否使用了正确的 SSH 配置。
-- AutoDL 实例是否已经停止、释放或重建。
+远程运行环境位于：
+
+```text
+/root/flowlogic-remote-model/
+```
+
+主要目录：
+
+```text
+/root/flowlogic-remote-model/bin/          运行文件
+/root/flowlogic-remote-model/resources/    运行资源
+/root/flowlogic-remote-model/workspace/    临时任务文件和日志
+```
+
+## 说明
+
+本地程序会通过 SSH 管理连接和端口转发，通常不需要手动开放公网 HTTP 服务端口。
+
+如果连接失败，请检查：
+
+- AutoDL 实例是否正在运行
+- SSH 登录指令是否完整复制
+- SSH 密码是否正确
+- 本地网络是否可以连接 AutoDL SSH 服务
