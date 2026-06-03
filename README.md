@@ -1,86 +1,81 @@
 # FLX Remote Runtime
 
-Remote GPU runtime environment for AutoDL deployment.
+这是一个用于 AutoDL 社区镜像的远程 GPU 运行环境说明仓库。
 
-This repository is the public description shell for an AutoDL community image.
-The runnable environment is provided by the AutoDL image itself. This repository
-does not contain runtime binaries, model files, credentials, or user data.
+镜像本体由 AutoDL 提供，本仓库只保留公开说明文档，不包含运行二进制文件、模型文件、凭据或用户数据。
 
-## Purpose
+## 用途
 
-The image provides a prepared GPU runtime that can be started on AutoDL and used
-by a local desktop client through SSH. It is intended for GPU-assisted speech
-synthesis and video synchronization workflows while keeping the desktop workflow
-on the local machine.
+该镜像提供一个已经配置好的 GPU 运行环境，可在 AutoDL 实例中启动，并通过本地桌面端使用 SSH 连接调用。
 
-## AutoDL Image Usage
+适用场景：
 
-1. Create an AutoDL instance from the published community image.
-2. Keep the instance running while using the local desktop client.
-3. Copy the SSH login command and password from the AutoDL instance page.
-4. In the desktop client, enable remote server mode.
-5. Paste the SSH login command and password.
-6. Save the SSH settings.
-7. Use "Test connection" to verify that the remote runtime is reachable.
-8. Run the normal desktop workflow.
+- 语音合成
+- 视频同步处理
+- 需要远程 GPU 参与的多媒体生成流程
 
-Example SSH command format:
+## 使用方式
+
+1. 在 AutoDL 中使用该社区镜像创建实例。
+2. 保持 AutoDL 实例处于运行状态。
+3. 在 AutoDL 实例页面复制 SSH 登录指令和密码。
+4. 打开本地桌面端。
+5. 开启远程服务器模式。
+6. 填入 SSH 登录指令和密码。
+7. 保存远程 SSH 配置。
+8. 点击“测试连接”，确认远程运行环境可用。
+9. 按照本地桌面端的正常流程执行任务。
+
+SSH 登录指令示例：
 
 ```bash
 ssh -p 12345 root@connect.example.seetacloud.com
 ```
 
-## Runtime Layout
+## 运行目录
 
-The image expects the runtime files to be available at:
+镜像中的远程运行环境位于：
 
 ```text
 /root/flowlogic-remote-model/
 ```
 
-Important paths:
+主要目录：
 
 ```text
-/root/flowlogic-remote-model/bin/          Runtime binaries
-/root/flowlogic-remote-model/resources/    Runtime resources
-/root/flowlogic-remote-model/workspace/    Temporary task files and logs
+/root/flowlogic-remote-model/bin/          运行文件
+/root/flowlogic-remote-model/resources/    运行资源
+/root/flowlogic-remote-model/workspace/    临时任务文件和日志
 ```
 
-The `workspace` directory is used for temporary files generated during remote
-tasks. These files are not required for image publication.
+`workspace` 目录用于保存任务执行过程中的临时文件。发布或更新镜像前，可以清理该目录下的运行态内容。
 
-## Networking
+## 网络连接
 
-The desktop client connects through SSH and creates the required local tunnel
-automatically. Users do not need to manually expose a public HTTP service port.
+本地桌面端通过 SSH 连接 AutoDL 实例，并自动建立所需的本地转发。
 
-If the connection test fails, check:
+用户通常不需要手动开放公网 HTTP 服务端口。
 
-- The AutoDL instance is running.
-- The SSH login command is copied exactly from AutoDL.
-- The SSH password is correct.
-- The local network allows outbound SSH connections.
+如果连接测试失败，请检查：
 
-## Image Notes
+- AutoDL 实例是否正在运行。
+- SSH 登录指令是否完整复制。
+- SSH 密码是否正确。
+- 本地网络是否允许访问 AutoDL SSH 服务。
 
-- The image is designed for CUDA-capable AutoDL GPU instances.
-- The runtime should be started and controlled by the desktop client.
-- Do not store user input files in the image before publishing.
-- Do not publish logs, temporary files, API keys, credentials, or secrets.
+## 镜像说明
 
-## Security Notes
+- 该镜像适用于支持 CUDA 的 AutoDL GPU 实例。
+- 远程运行环境由本地桌面端负责启动和调用。
+- 发布镜像前不要保留用户输入文件。
+- 发布镜像前不要保留日志、临时文件、API Key、凭据或其他敏感信息。
 
-This repository intentionally contains only public usage documentation. Runtime
-implementation files, model files, credentials, user data, and desktop client
-code are not part of this repository.
+## 问题排查
 
-## Support
+如遇到运行或连接问题，请准备以下信息：
 
-For runtime setup or connection issues, provide the following information to the
-support team:
-
-- AutoDL GPU type
-- AutoDL image name
-- SSH login command, with password omitted
-- Desktop client error message
-- Whether "Test connection" succeeds
+- AutoDL GPU 型号
+- AutoDL 镜像名称
+- SSH 登录指令，注意不要包含密码
+- 本地桌面端错误提示
+- “测试连接”是否成功

@@ -1,75 +1,73 @@
-# AutoDL Usage Guide
+# AutoDL 使用说明
 
-This guide describes how to use the FLX remote runtime image on AutoDL for
-speech synthesis and video synchronization workflows.
+本文档说明如何在 AutoDL 中使用 FLX Remote Runtime 镜像。
 
-## Create An Instance
+## 创建实例
 
-1. Open the AutoDL console.
-2. Choose the published community image.
-3. Select a CUDA-capable GPU instance.
-4. Create and start the instance.
+1. 打开 AutoDL 控制台。
+2. 选择该社区镜像。
+3. 选择支持 CUDA 的 GPU 实例。
+4. 创建并启动实例。
 
-Recommended baseline:
+建议配置：
 
-- NVIDIA GPU with CUDA support
-- 8 GB GPU memory or higher
-- 16 GB system memory or higher
+- NVIDIA CUDA GPU
+- 显存 8GB 及以上
+- 内存 16GB 及以上
 
-Higher GPU memory is recommended for longer tasks.
+如果需要处理较长任务，建议选择更高显存的 GPU。
 
-## Connect From The Desktop Client
+## 本地桌面端连接
 
-After the AutoDL instance is running:
+AutoDL 实例启动后：
 
-1. Copy the SSH login command from AutoDL.
-2. Copy the SSH password from AutoDL.
-3. Open the desktop client.
-4. Open the model runtime settings.
-5. Enable remote server mode.
-6. Paste the SSH login command and password.
-7. Save the remote SSH settings.
-8. Click "Test connection".
+1. 复制 AutoDL 页面中的 SSH 登录指令。
+2. 复制 AutoDL 页面中的 SSH 密码。
+3. 打开本地桌面端。
+4. 打开模型运行方式设置。
+5. 开启远程服务器模式。
+6. 填入 SSH 登录指令和密码。
+7. 保存远程 SSH 配置。
+8. 点击“测试连接”。
 
-The desktop client manages the SSH tunnel and remote runtime startup.
+本地桌面端会自动管理 SSH 连接、端口转发和远程运行环境启动。
 
-## Runtime State
+## 运行态文件
 
-Temporary task files are stored under:
+远程临时任务文件位于：
 
 ```text
 /root/flowlogic-remote-model/workspace/
 ```
 
-These files can be cleared before saving or publishing an image. They are not
-part of the required runtime environment.
+这些文件不是镜像运行环境的必要组成部分。发布或更新镜像前，可以清理该目录下的临时输入、输出和日志。
 
-## Troubleshooting
+## 常见问题
 
-### Connection Failed
+### 连接失败
 
-Check that:
+请检查：
 
-- The AutoDL instance is running.
-- The SSH login command includes the correct host and port.
-- The SSH password is correct.
-- The local machine can connect to AutoDL over SSH.
+- AutoDL 实例是否正在运行。
+- SSH 登录指令中的主机和端口是否正确。
+- SSH 密码是否正确。
+- 本地网络是否可以连接 AutoDL SSH 服务。
 
-### Task Failed
+### 任务失败
 
-Check that:
+请检查：
 
-- The instance has enough GPU memory.
-- The remote runtime directory exists.
-- The desktop client is using the intended SSH settings.
-- The AutoDL instance has not been stopped or recycled.
+- AutoDL 实例显存是否足够。
+- 远程运行目录是否存在。
+- 本地桌面端是否使用了正确的 SSH 配置。
+- AutoDL 实例是否已经停止、释放或重建。
 
-### Image Publishing Checklist
+## 镜像发布前检查
 
-Before publishing or updating the image:
+发布或更新镜像前建议确认：
 
-- Stop the remote runtime service.
-- Clear logs.
-- Clear temporary task inputs and outputs.
-- Remove build artifacts and caches.
-- Confirm no API keys, credentials, or runtime state files are present.
+- 远程运行服务已停止。
+- 日志已清理。
+- 临时任务输入和输出已清理。
+- 编译中间产物和缓存已清理。
+- 不包含 API Key、凭据或运行态文件。
