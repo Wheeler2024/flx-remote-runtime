@@ -48,7 +48,7 @@ ssh -p 12345 root@connect.example.seetacloud.com
 /root/flowlogic-remote-model/workspace/    临时任务文件和日志
 ```
 
-`workspace` 目录用于保存任务执行过程中的临时文件。
+`workspace` 目录用于保存任务执行过程中的临时文件。发布或更新镜像前，可以清理该目录下的运行态内容。
 
 ## 网络连接
 
@@ -67,8 +67,8 @@ ssh -p 12345 root@connect.example.seetacloud.com
 
 - 该镜像适用于支持 CUDA 的 AutoDL GPU 实例。
 - 远程运行环境由外部程序通过 SSH 负责启动和调用。
-- 任务执行过程中会产生临时文件和日志。
-- 如需重置运行状态，可以清理 `workspace` 目录下的临时内容。
+- 发布镜像前不要保留用户输入文件。
+- 发布镜像前不要保留日志、临时文件、API Key、凭据或其他敏感信息。
 
 ## 问题排查
 
