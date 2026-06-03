@@ -1,6 +1,7 @@
 # AutoDL Usage Guide
 
-This guide describes how to use the FLX remote runtime image on AutoDL.
+This guide describes how to use the FLX remote runtime image on AutoDL for
+speech synthesis and video synchronization workflows.
 
 ## Create An Instance
 
@@ -71,4 +72,4 @@ Before publishing or updating the image:
 - Clear logs.
 - Clear temporary task inputs and outputs.
 - Remove build artifacts and caches.
-- Confirm no API keys or activation files are present.
+- Confirm no API keys, credentials, or runtime state files are present.

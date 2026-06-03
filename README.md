@@ -4,15 +4,14 @@ Remote GPU runtime environment for AutoDL deployment.
 
 This repository is the public description shell for an AutoDL community image.
 The runnable environment is provided by the AutoDL image itself. This repository
-does not contain model weights, private application code, activation data, API
-keys, or customer assets.
+does not contain runtime binaries, model files, credentials, or user data.
 
 ## Purpose
 
 The image provides a prepared GPU runtime that can be started on AutoDL and used
-by a local desktop client through SSH. It is intended for users who want to run
-GPU-heavy tasks on a remote AutoDL instance while keeping the desktop workflow on
-their local machine.
+by a local desktop client through SSH. It is intended for GPU-assisted speech
+synthesis and video synchronization workflows while keeping the desktop workflow
+on the local machine.
 
 ## AutoDL Image Usage
 
@@ -66,13 +65,13 @@ If the connection test fails, check:
 
 - The image is designed for CUDA-capable AutoDL GPU instances.
 - The runtime should be started and controlled by the desktop client.
-- Do not store customer input files in the image before publishing.
-- Do not publish logs, temporary files, API keys, activation files, or secrets.
+- Do not store user input files in the image before publishing.
+- Do not publish logs, temporary files, API keys, credentials, or secrets.
 
 ## Security Notes
 
-This repository intentionally contains only public usage documentation. Private
-runtime implementation, model files, secrets, customer data, and desktop client
+This repository intentionally contains only public usage documentation. Runtime
+implementation files, model files, credentials, user data, and desktop client
 code are not part of this repository.
 
 ## Support
